@@ -7,11 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.prectical2.model.ItemsItem
+import com.example.prectical2.utils.Utils
 import com.example.prectical2.viewmodel.UserViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
@@ -22,21 +25,34 @@ fun UserListCompose(
 ){
 
     val userItemList : LazyPagingItems<ItemsItem> = viewModel.userFlow.collectAsLazyPagingItems()
+    val rememberSwipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
 
-    LazyColumn{
-        items(userItemList){item: ItemsItem? ->
-            if (item != null) {
-                Log.i("krupal",item.displayName.toString())
-                val (isChecked, setChecked) = remember { mutableStateOf(false) }
-                UserRowItem(
-                    itemsItem = item,
-                    onCardClick = {},
-                    isSaved = isChecked,
-                    onCheckedChange = {
-                    setChecked(!isChecked)
-                })
+    SwipeRefresh(
+        state = rememberSwipeRefreshState,
+        onRefresh = {
+            viewModel.clearSort()
+            userItemList.refresh()
+        }
+    ) {
+        rememberSwipeRefreshState.isRefreshing = userItemList.loadState.refresh is LoadState.Loading
+
+        LazyColumn{
+            items(userItemList){item: ItemsItem? ->
+                if (item != null) {
+                    Log.i("krupal",item.displayName.toString())
+                    val (isChecked, setChecked) = remember { mutableStateOf(false) }
+                    UserRowItem(
+                        itemsItem = item,
+                        onCardClick = {},
+                        isSaved = isChecked,
+                        onCheckedChange = {
+                            setChecked(!isChecked)
+                        })
+                }
             }
         }
     }
+
+
 
 }

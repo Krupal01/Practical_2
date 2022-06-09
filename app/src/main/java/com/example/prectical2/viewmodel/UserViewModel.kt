@@ -20,4 +20,9 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         userRepository.getUserSource()
     }.flow.cachedIn(viewModelScope)
 
+    fun clearSort(){
+        Utils.sortBy = null
+    }
+
+
 }

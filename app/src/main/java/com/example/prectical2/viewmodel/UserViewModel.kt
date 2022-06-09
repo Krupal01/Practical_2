@@ -1,5 +1,6 @@
 package com.example.prectical2.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -20,8 +21,15 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         userRepository.getUserSource()
     }.flow.cachedIn(viewModelScope)
 
+    var sortBy = MutableLiveData<String?>(null)
+
     fun clearSort(){
         Utils.sortBy = null
+    }
+
+    fun setSort(sortBy : String?){
+        this.sortBy.value = sortBy
+        Utils.sortBy = sortBy
     }
 
 

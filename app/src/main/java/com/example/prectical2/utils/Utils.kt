@@ -14,6 +14,6 @@ class Utils {
         var QUERY_SITE_VALUE = "stackoverflow"
         var SORT_BY_NAME = "name"
         var SORT_BY_REPUTATION = "reputation"
-        var sortBy : String? = SORT_BY_NAME   //sorting param
+        var sortBy : String? = null   //sorting param
     }
 }

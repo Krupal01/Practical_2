@@ -7,6 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -19,13 +21,17 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun UserListCompose(
-    modifier: Modifier = Modifier,
     viewModel: UserViewModel,
-    context: Context
+    context: Context,
+    lifecycleOwner: LifecycleOwner
 ){
 
     val userItemList : LazyPagingItems<ItemsItem> = viewModel.userFlow.collectAsLazyPagingItems()
     val rememberSwipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
+
+    viewModel.sortBy.observe(lifecycleOwner, Observer {
+        userItemList.refresh()
+    })
 
     SwipeRefresh(
         state = rememberSwipeRefreshState,

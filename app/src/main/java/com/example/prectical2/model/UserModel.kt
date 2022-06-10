@@ -1,5 +1,9 @@
 package com.example.prectical2.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.example.prectical2.db.ItemConverter
 import com.google.gson.annotations.SerializedName
 
 data class UserModel(
@@ -20,6 +24,7 @@ data class UserModel(
 	val items: List<ItemsItem>
 )
 
+@Entity
 data class ItemsItem(
 
 	@field:SerializedName("reputation_change_quarter")
@@ -34,6 +39,7 @@ data class ItemsItem(
 	@field:SerializedName("reputation")
 	val reputation: Int? = null,
 
+	@TypeConverters(ItemConverter::class)
 	@field:SerializedName("badge_counts")
 	val badgeCounts: BadgeCounts? = null,
 
@@ -52,8 +58,9 @@ data class ItemsItem(
 	@field:SerializedName("profile_image")
 	val profileImage: String? = null,
 
+	@PrimaryKey
 	@field:SerializedName("account_id")
-	val accountId: Int? = null,
+	val accountId: Int,
 
 	@field:SerializedName("user_type")
 	val userType: String? = null,

@@ -52,6 +52,11 @@ fun UserListCompose(
                         isSaved = isChecked,
                         onCheckedChange = {
                             setChecked(!isChecked)
+                            if (it){
+                                viewModel.saveBookmark(itemsItem = item)
+                            }else{
+                                viewModel.removeBookmark(itemsItem = item)
+                            }
                         })
                 }
             }

@@ -76,14 +76,14 @@ fun UserRowItem(
                 )
                 Row(modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp,horizontal = 10.dp)) {
                     Text(
-                        text = itemsItem.reputation.toString(),
+                        text = itemsItem.getPrefixReputation().toString(),
                         color = Color.Black,
                         modifier = Modifier.padding(horizontal = 3.dp),
                         fontSize = 14.sp,
                     )
-                    BadgeCounts(R.color.gold, itemsItem.badgeCounts?.gold.toString())
-                    BadgeCounts(R.color.silver, itemsItem.badgeCounts?.silver.toString())
-                    BadgeCounts(R.color.bronze, itemsItem.badgeCounts?.bronze.toString())
+                    BadgeCounts(R.color.gold, itemsItem.getPrefixBadgeGold().toString())
+                    BadgeCounts(R.color.silver, itemsItem.getPrefixBadgeSilver().toString())
+                    BadgeCounts(R.color.bronze, itemsItem.getPrefixBadgeBronze().toString())
 
                 }
             }

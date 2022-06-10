@@ -85,7 +85,46 @@ data class ItemsItem(
 
 	@field:SerializedName("location")
 	val location: String? = null
-)
+){
+	private fun setPrefixToInt(number : Int?): String? {
+		return if(number != null){
+			val floatValue = number.toFloat()
+			when {
+				number >= 1000000000 -> {
+					String.format("%.02fB", (floatValue/1000000000))
+				}
+				number >= 1000000 -> {
+					String.format("%.02fM", (floatValue/1000000))
+				}
+				number >= 1000 -> {
+					String.format("%.02fK", (floatValue/1000))
+				}
+				else -> {
+					number.toString()
+				}
+			}
+		}else{
+			null
+		}
+	}
+
+	fun getPrefixReputation():String?{
+		return setPrefixToInt(reputation)
+	}
+
+	fun getPrefixBadgeGold():String?{
+		return setPrefixToInt(badgeCounts?.gold)
+	}
+
+	fun getPrefixBadgeSilver():String?{
+		return setPrefixToInt(badgeCounts?.silver)
+	}
+
+	fun getPrefixBadgeBronze():String?{
+		return setPrefixToInt(badgeCounts?.bronze)
+	}
+
+}
 
 data class BadgeCounts(
 

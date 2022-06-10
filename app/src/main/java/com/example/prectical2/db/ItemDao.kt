@@ -1,5 +1,6 @@
 package com.example.prectical2.db
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.prectical2.model.ItemsItem
 
@@ -14,5 +15,8 @@ interface ItemDao {
 
     @Delete
     suspend fun deleteItems(itemsItem: ItemsItem)
+
+    @Query("select * from ItemsItem")
+    fun getSavedItemsPagingSource() : PagingSource<Int,ItemsItem>
 
 }

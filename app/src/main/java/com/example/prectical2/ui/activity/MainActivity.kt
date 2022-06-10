@@ -15,12 +15,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.prectical2.ui.compose.BottomSheetContent
 import com.example.prectical2.ui.compose.UserListCompose
 import com.example.prectical2.ui.theme.Prectical2Theme
+import com.example.prectical2.utils.LocalPermission
 import com.example.prectical2.viewmodel.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -60,7 +63,6 @@ fun MainScreenCompose(
         }
     })
 
-
     BottomSheetScaffold(
         topBar = {
             TopAppBar(
@@ -91,7 +93,9 @@ fun MainScreenCompose(
                         }
                     }
                 },
-                modifier = Modifier.align(alignment = Alignment.End).padding(vertical = 10.dp,horizontal = 5.dp),
+                modifier = Modifier
+                    .align(alignment = Alignment.End)
+                    .padding(vertical = 10.dp, horizontal = 5.dp),
                 shape = RoundedCornerShape(15.dp)
             ) {
                 Text(text = buttonText.value, color = Color.White)
@@ -101,4 +105,6 @@ fun MainScreenCompose(
             UserListCompose(viewModel = viewModel, context = context,lifecycleOwner = lifecycleOwner)
         }
     }
+
 }
+

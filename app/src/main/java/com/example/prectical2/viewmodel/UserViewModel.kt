@@ -21,13 +21,14 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         userRepository.getUserSource()
     }.flow.cachedIn(viewModelScope)
 
-    var sortBy = MutableLiveData<String?>(null)
+    var sortBy = MutableLiveData(Utils.SORT_BY_NAME)
 
     fun clearSort(){
-        Utils.sortBy = null
+        sortBy.value = Utils.SORT_BY_NAME
+        Utils.sortBy = Utils.SORT_BY_NAME
     }
 
-    fun setSort(sortBy : String?){
+    fun setSort(sortBy : String){
         this.sortBy.value = sortBy
         Utils.sortBy = sortBy
     }

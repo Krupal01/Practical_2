@@ -2,6 +2,9 @@ package com.example.prectical2.utils
 
 class Utils {
     companion object{
+
+        const val LOG_TAG = "practical 2"
+
         const val BASE_URL = "https://api.stackexchange.com"
         const val URL_PARAM = "/2.3/users"
         const val QUERY_PAGE_TAG = "page"
@@ -14,6 +17,6 @@ class Utils {
         var QUERY_SITE_VALUE = "stackoverflow"
         var SORT_BY_NAME = "name"
         var SORT_BY_REPUTATION = "reputation"
-        var sortBy : String? = null   //sorting param
+        var sortBy : String = SORT_BY_NAME   //sorting param
     }
 }

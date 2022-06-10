@@ -14,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.example.prectical2.utils.Utils
 import com.example.prectical2.viewmodel.UserViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +26,8 @@ import kotlinx.coroutines.launch
 fun BottomSheetContent(
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     coroutineScope: CoroutineScope,
-    viewModel : UserViewModel
+    viewModel : UserViewModel,
+    lifecycleOwner: LifecycleOwner
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -61,6 +64,7 @@ fun BottomSheetContent(
                     Utils.SORT_BY_REPUTATION
                 ),
                 viewModel = viewModel,
+                lifecycleOwner = lifecycleOwner,
                 bottomSheetScaffoldState = bottomSheetScaffoldState,
                 coroutineScope = coroutineScope
             )
@@ -73,10 +77,15 @@ fun BottomSheetContent(
 fun RadioGroupBottomSheetItem(
     mItems: List<String>,
     viewModel: UserViewModel,
+    lifecycleOwner: LifecycleOwner,
     bottomSheetScaffoldState: BottomSheetScaffoldState,
     coroutineScope: CoroutineScope,
 ){
-    val mRememberObserver = remember { mutableStateOf("") }
+    val mRememberObserver = remember { mutableStateOf(viewModel.sortBy.value) }
+
+    viewModel.sortBy.observe(lifecycleOwner, Observer {
+        mRememberObserver.value = it
+    })
 
     Column {
         mItems.forEach { mItem ->

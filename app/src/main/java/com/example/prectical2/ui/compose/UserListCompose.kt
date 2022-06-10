@@ -45,7 +45,6 @@ fun UserListCompose(
         LazyColumn{
             items(userItemList){item: ItemsItem? ->
                 if (item != null) {
-                    Log.i("krupal",item.displayName.toString())
                     val (isChecked, setChecked) = remember { mutableStateOf(false) }
                     UserRowItem(
                         itemsItem = item,

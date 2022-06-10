@@ -18,11 +18,7 @@ class UserPagingSource @Inject constructor(val userService: UserService) : Pagin
         return try {
 
             val page = params.key?:Utils.FIRST_PAGE
-            val data = if (Utils.sortBy != null){
-                userService.getUserSort(page,Utils.QUERY_PAGESIZE_VALUE,Utils.QUERY_SITE_VALUE, Utils.sortBy!!)
-            }else{
-                userService.getUser(page,Utils.QUERY_PAGESIZE_VALUE,Utils.QUERY_SITE_VALUE)
-            }
+            val data = userService.getUserSort(page,Utils.QUERY_PAGESIZE_VALUE,Utils.QUERY_SITE_VALUE, Utils.sortBy)
 
             LoadResult.Page(
                 data = data.items,
@@ -31,7 +27,7 @@ class UserPagingSource @Inject constructor(val userService: UserService) : Pagin
             )
 
         }catch (e:Exception){
-            Log.i("krupal",e.toString())
+            Log.i(Utils.LOG_TAG,e.toString())
             LoadResult.Error(e)
         }
     }

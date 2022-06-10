@@ -54,7 +54,7 @@ fun MainScreenCompose(
 
     viewModel.sortBy.observe(lifecycleOwner, Observer {
         if (it != null){
-            buttonText.value = "Sort : "+it.toString()
+            buttonText.value = "Sort : $it"
         }else{
             buttonText.value = "Sort"
         }
@@ -73,7 +73,8 @@ fun MainScreenCompose(
             BottomSheetContent(
                 bottomSheetScaffoldState = bottomSheetScaffoldState,
                 coroutineScope = coroutineScope,
-                viewModel = viewModel
+                viewModel = viewModel,
+                lifecycleOwner = lifecycleOwner
             )
         },
         sheetPeekHeight = 0.dp

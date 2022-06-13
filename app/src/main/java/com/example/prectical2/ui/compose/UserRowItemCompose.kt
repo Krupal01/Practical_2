@@ -67,23 +67,37 @@ fun UserRowItem(
                 Text(text = itemsItem.displayName.toString(),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 3.dp,horizontal = 10.dp),
+                        .padding(vertical = 3.dp, horizontal = 10.dp),
                     fontSize = 20.sp,
                     maxLines = 2,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
                     overflow = TextOverflow.Ellipsis
                 )
-                Row(modifier = Modifier.fillMaxWidth().padding(vertical = 3.dp,horizontal = 10.dp)) {
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 3.dp, horizontal = 10.dp)) {
                     Text(
                         text = itemsItem.getPrefixReputation().toString(),
                         color = Color.Black,
                         modifier = Modifier.padding(horizontal = 3.dp),
                         fontSize = 14.sp,
                     )
-                    BadgeCounts(R.color.gold, itemsItem.getPrefixBadgeGold().toString())
-                    BadgeCounts(R.color.silver, itemsItem.getPrefixBadgeSilver().toString())
-                    BadgeCounts(R.color.bronze, itemsItem.getPrefixBadgeBronze().toString())
+                    BadgeCounts(
+                        colorResourceId = R.color.gold,
+                        badge = itemsItem.getPrefixBadgeGold().toString(),
+                        modifier = Modifier.padding(horizontal = 3.dp)
+                    )
+                    BadgeCounts(
+                        colorResourceId = R.color.silver,
+                        badge = itemsItem.getPrefixBadgeSilver().toString(),
+                        modifier = Modifier.padding(horizontal = 3.dp)
+                    )
+                    BadgeCounts(
+                        colorResourceId = R.color.bronze,
+                        badge = itemsItem.getPrefixBadgeBronze().toString(),
+                        modifier = Modifier.padding(horizontal = 3.dp)
+                    )
 
                 }
             }
@@ -96,11 +110,11 @@ fun UserRowItem(
 }
 
 @Composable
-fun BadgeCounts(id : Int, badge: String) {
-    Row(modifier = Modifier.padding(horizontal = 3.dp)) {
+fun BadgeCounts(colorResourceId : Int, badge: String , modifier: Modifier = Modifier) {
+    Row(modifier = modifier) {
         Image(
             painter = painterResource(id = R.drawable.ic_baseline_circle_16),
-            colorFilter = ColorFilter.tint(colorResource(id = id)),
+            colorFilter = ColorFilter.tint(colorResource(id = colorResourceId)),
             contentDescription = "",
             modifier = Modifier
                 .align(Alignment.CenterVertically)

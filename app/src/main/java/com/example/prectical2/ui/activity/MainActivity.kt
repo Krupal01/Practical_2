@@ -20,7 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.prectical2.ui.compose.BottomSheetContent
+import com.example.prectical2.ui.compose.NavHostScreen
 import com.example.prectical2.ui.compose.UserListCompose
 import com.example.prectical2.ui.theme.Prectical2Theme
 import com.example.prectical2.utils.LocalPermission
@@ -36,7 +39,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Prectical2Theme {
-                MainScreenCompose(viewModel = userViewModel,context = this,lifecycleOwner = this)
+                val navController = rememberNavController()
+                NavHostScreen(
+                    navController = navController ,
+                    viewModel = userViewModel,
+                    context = this,
+                    lifecycleOwner = this
+                )
             }
         }
     }
@@ -47,10 +56,11 @@ class MainActivity : ComponentActivity() {
 fun MainScreenCompose(
     viewModel: UserViewModel,
     context : Context,
-    lifecycleOwner: LifecycleOwner
+    lifecycleOwner: LifecycleOwner,
+    navController : NavHostController,
 ){
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = BottomSheetState(BottomSheetValue.Collapsed))
-    // Declaing Coroutine scope
+    // Declaring Coroutine scope
     val coroutineScope = rememberCoroutineScope()
 
     val buttonText = remember { mutableStateOf("Sort") }
@@ -102,7 +112,7 @@ fun MainScreenCompose(
             }
 
             //Pagination List View
-            UserListCompose(viewModel = viewModel, context = context,lifecycleOwner = lifecycleOwner)
+            UserListCompose(viewModel = viewModel, context = context,lifecycleOwner = lifecycleOwner,navController = navController)
         }
     }
 

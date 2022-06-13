@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.prectical2.db.ItemConverter
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class UserModel(
 
@@ -22,7 +23,7 @@ data class UserModel(
 
 	@field:SerializedName("items")
 	val items: List<ItemsItem>
-)
+) : Serializable
 
 @Entity
 data class ItemsItem(
@@ -31,7 +32,7 @@ data class ItemsItem(
 	val reputationChangeQuarter: Int? = null,
 
 	@field:SerializedName("link")
-	val link: String? = null,
+    var link: String? = null,
 
 	@field:SerializedName("last_access_date")
 	val lastAccessDate: Int? = null,
@@ -56,7 +57,7 @@ data class ItemsItem(
 	val isEmployee: Boolean? = null,
 
 	@field:SerializedName("profile_image")
-	val profileImage: String? = null,
+	var profileImage: String? = null,
 
 	@PrimaryKey
 	@field:SerializedName("account_id")
@@ -85,7 +86,7 @@ data class ItemsItem(
 
 	@field:SerializedName("location")
 	val location: String? = null
-){
+):Serializable {
 	private fun setPrefixToInt(number : Int?): String? {
 		return if(number != null){
 			val floatValue = number.toFloat()
@@ -136,4 +137,4 @@ data class BadgeCounts(
 
 	@field:SerializedName("bronze")
 	val bronze: Int? = null
-)
+) : Serializable

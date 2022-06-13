@@ -1,7 +1,7 @@
 package com.example.prectical2.ui.compose
 
 import android.content.Context
-import android.util.Log
+import android.content.Intent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,11 +16,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.navigation.NavHostController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.prectical2.model.ItemsItem
+import com.example.prectical2.navigation.Screens
 import com.example.prectical2.utils.Utils
 import com.example.prectical2.viewmodel.UserViewModel
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -30,7 +32,8 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 fun UserListCompose(
     viewModel: UserViewModel,
     context: Context,
-    lifecycleOwner: LifecycleOwner
+    lifecycleOwner: LifecycleOwner,
+    navController : NavHostController
 ){
 
     val userItemList : LazyPagingItems<ItemsItem> = viewModel.userFlow.collectAsLazyPagingItems()
@@ -72,7 +75,9 @@ fun UserListCompose(
                         val (isChecked, setChecked) = remember { mutableStateOf(viewModel.BookmaredUsers.value!!.contains(item)) }
                         UserRowItem(
                             itemsItem = item,
-                            onCardClick = {},
+                            onCardClick = {
+                                navController.navigate(Screens.Details.passItemsItem(itemsItem = item))
+                            },
                             isSaved = isChecked,
                             onCheckedChange = {
                                 setChecked(!isChecked)

@@ -2,6 +2,7 @@ package com.example.prectical2.ui.compose
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -69,6 +70,16 @@ fun UserListCompose(
                 )
             }
         }else{
+            val errorState = when {
+                userItemList.loadState.append is LoadState.Error -> userItemList.loadState.append as LoadState.Error
+                userItemList.loadState.prepend is LoadState.Error ->  userItemList.loadState.prepend as LoadState.Error
+                userItemList.loadState.refresh is LoadState.Error -> userItemList.loadState.refresh as LoadState.Error
+                else -> null
+            }
+            errorState?.let {
+                Toast.makeText(context, it.error.toString(), Toast.LENGTH_LONG).show()
+            }
+
             LazyColumn{
                 items(userItemList){item: ItemsItem? ->
                     if (item != null) {

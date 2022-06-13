@@ -1,7 +1,6 @@
 package com.example.prectical2.ui.compose
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
@@ -49,7 +48,6 @@ fun NavHostScreen(
         ){
             val arg = it.arguments?.getString(ARG_ITEMSITEM).toString()
             val itemsItem = Gson().fromJson(arg, ItemsItem::class.java)
-            Log.i(Utils.LOG_TAG, arg)
             DetailScreen(itemsItem = itemsItem)
         }
     }

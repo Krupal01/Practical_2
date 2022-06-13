@@ -1,6 +1,5 @@
 package com.example.prectical2.pagingsource
 
-import android.util.Log
 import android.widget.Toast
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
@@ -27,7 +26,6 @@ class UserPagingSource @Inject constructor(val userService: UserService) : Pagin
             )
 
         }catch (e:Exception){
-            Log.i(Utils.LOG_TAG,e.toString())
             LoadResult.Error(e)
         }
     }

@@ -1,7 +1,6 @@
 package com.example.prectical2.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -65,7 +64,6 @@ class UserViewModel @Inject constructor(
 
     private fun updateLocalBookmarked() = viewModelScope.launch {
         BookmaredUsers.value = itemDao.getSavedItems()
-        Log.i(Utils.LOG_TAG,BookmaredUsers.value.toString())
     }
 
     init {

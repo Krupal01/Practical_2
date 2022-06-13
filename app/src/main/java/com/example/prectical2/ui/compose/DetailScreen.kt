@@ -57,6 +57,8 @@ fun DetailScreen(
                 .padding(all = 15.dp)
         ) {
 
+            val mUriHandler = LocalUriHandler.current
+
             fun getLinkAnnotatedString(string: String): AnnotatedString {
                 return buildAnnotatedString {
 
@@ -77,6 +79,28 @@ fun DetailScreen(
                     end = mEndIndex
                 )
 
+                }
+            }
+
+            fun getLocationAnnotatedString(string: String): AnnotatedString {
+                return buildAnnotatedString {
+
+                    val mStartIndex = 0
+                    val mEndIndex = string.length
+                    append(string)
+                    addStyle(
+                        style = SpanStyle(
+                            color = Color.Blue,
+                            textDecoration = TextDecoration.Underline
+                        ), start = mStartIndex, end = mEndIndex
+                    )
+
+                    addStringAnnotation(
+                        tag = "URL",
+                        annotation = "http://maps.google.co.in/maps?q=$string",
+                        start = 0,
+                        end = mEndIndex
+                    )
                 }
             }
 
@@ -196,7 +220,7 @@ fun DetailScreen(
                 fontSize = 18.sp
             )
 
-            val locationLink = getLinkAnnotatedString(itemsItem.location.toString())
+            val locationLink = getLocationAnnotatedString(itemsItem.location.toString())
             ClickableText(
                 text = locationLink,
                 modifier = Modifier
@@ -207,7 +231,10 @@ fun DetailScreen(
                         bottom.linkTo(LocationLabel.bottom)
                     },
                 onClick = {
-
+                    locationLink.getStringAnnotations("URL", it, it)
+                        .firstOrNull()?.let { stringAnnotation ->
+                            mUriHandler.openUri(stringAnnotation.item)
+                        }
                 }
             )
 
@@ -235,7 +262,10 @@ fun DetailScreen(
                         start.linkTo(LinkLabel.end)
                     },
                 onClick = {
-
+                    link.getStringAnnotations("URL", it, it)
+                        .firstOrNull()?.let { stringAnnotation ->
+                            mUriHandler.openUri(stringAnnotation.item)
+                        }
                 },
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 3,
